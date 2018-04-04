@@ -1,9 +1,17 @@
 package fr.xebia.xke.sangria.book
 
+import java.time.OffsetDateTime
+import java.util.UUID
+
 import io.circe.generic.semiauto._
 import sangria.macros.derive._
 
-case class Book(id: Int, name: String)
+case class Book(isbn: UUID,
+                title: String,
+                synopsis: String,
+                date: OffsetDateTime,
+                author: Author,
+                genre: Genre)
 
 object Book {
   //GraphQL
