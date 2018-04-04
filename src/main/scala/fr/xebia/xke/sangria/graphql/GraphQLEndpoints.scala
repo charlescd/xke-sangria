@@ -31,23 +31,28 @@ class GraphQLEndpoints(bookRepository: BookRepository)(implicit ec: ExecutionCon
   }
 
   private def graphQLEndpoint(json: Json) = {
-    val query = root.query.string.getOption(json).get
-    val operation = root.operationName.string.getOption(json)
-    val vars = Json.fromJsonObject(root.variables.obj.getOption(json).getOrElse(JsonObject()))
+    root.query.string.getOption(json) match {
+      case Some(query) =>
+        val operation = root.operationName.string.getOption(json)
+        val vars = Json.fromJsonObject(root.variables.obj.getOption(json).getOrElse(JsonObject()))
 
-    QueryParser.parse(query) match {
-      case Success(queryAst) =>
-        val res = Executor.execute(Query.schema, queryAst, bookRepository, variables = vars, operationName = operation)
-          .map(StatusCodes.OK -> _)
-          .recover {
-            case error: QueryAnalysisError => StatusCodes.BadRequest -> error.resolveError
-            case error: ErrorWithResolver => StatusCodes.InternalServerError -> error.resolveError
-          }
+        QueryParser.parse(query) match {
+          case Success(queryAst) =>
+            val res = Executor.execute(Query.schema, queryAst, bookRepository, variables = vars, operationName = operation)
+              .map(StatusCodes.OK -> _)
+              .recover {
+                case error: QueryAnalysisError => StatusCodes.BadRequest -> error.resolveError
+                case error: ErrorWithResolver => StatusCodes.InternalServerError -> error.resolveError
+              }
 
-        complete(res)
+            complete(res)
 
-      case Failure(error) ⇒
-        complete(StatusCodes.BadRequest, Json.obj("error" -> Json.fromString(error.getMessage)))
+          case Failure(error) =>
+            complete(StatusCodes.BadRequest, Json.obj("error" -> Json.fromString(error.getMessage)))
+        }
+
+      case None =>
+        complete(StatusCodes.BadRequest, Json.obj("error" -> Json.fromString("pas de query !")))
     }
   }
 }
