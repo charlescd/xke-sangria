@@ -1,22 +1,29 @@
 package fr.xebia.xke.sangria.rest
 
-import akka.http.scaladsl.server.Directives._
-import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
-import fr.xebia.xke.sangria.book.BookRepository
+import java.time.OffsetDateTime
 
-class RestEndpoints(bookRepository: BookRepository) {
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.unmarshalling.Unmarshaller
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import fr.xebia.xke.sangria.book.{BookService, Genre}
+
+class RestEndpoints(bookService: BookService) {
+
+  implicit val uuidUnmarshaller: Unmarshaller[String, OffsetDateTime] = Unmarshaller.strict(OffsetDateTime.parse)
 
   val fetchRoute =
-    path("books" / IntNumber) { bookId =>
+    path("books" / JavaUUID) { bookId =>
       get {
-        complete(bookRepository.book(bookId))
+        complete(bookService.findBook(bookId))
       }
     }
 
-  val fetchAllRoute =
+  val searchRoute =
     path("books") {
       get {
-        complete(bookRepository.books)
+        parameters("from".as[OffsetDateTime].?, "to".as[OffsetDateTime].?, "author".?, "genre".as[Genre].?) { (from, to, author, genre) =>
+          complete(bookService.search(from, to, author, genre))
+        }
       }
     }
 }
