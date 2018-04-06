@@ -1,8 +1,10 @@
-package fr.xebia.xke.sangria.book
+package fr.xebia.xke.sangria.models.book
 
 import java.time.OffsetDateTime
 import java.util.UUID
 
+import fr.xebia.xke.sangria.models.author.Author
+import fr.xebia.xke.sangria.models.genre.Genre
 import io.circe.generic.semiauto._
 import sangria.macros.derive._
 

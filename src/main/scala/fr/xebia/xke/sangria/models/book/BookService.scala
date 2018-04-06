@@ -1,7 +1,9 @@
-package fr.xebia.xke.sangria.book
+package fr.xebia.xke.sangria.models.book
 
 import java.time.OffsetDateTime
 import java.util.UUID
+
+import fr.xebia.xke.sangria.models.genre.Genre
 
 class BookService(bookRepository: BookRepository) {
   def search(from: Option[OffsetDateTime], to: Option[OffsetDateTime], author: Option[String], genre: Option[Genre]): Seq[Book] = {

@@ -5,6 +5,8 @@ import java.time.OffsetDateTime
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.unmarshalling.Unmarshaller
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import fr.xebia.xke.sangria.models.book.BookService
+import fr.xebia.xke.sangria.models.genre.Genre
 import fr.xebia.xke.sangria.book.{BookService, Genre}
 import fr.xebia.xke.sangria.jwt.JwtSupport.Directives._
 import fr.xebia.xke.sangria.jwt.User

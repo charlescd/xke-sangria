@@ -38,3 +38,7 @@ nom
 prénom
 }
 
+
+# Explications des difficultés rencontrées
+
+- UUID n'est pas dans Sangria,   

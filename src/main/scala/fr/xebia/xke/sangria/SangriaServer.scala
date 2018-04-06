@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-import fr.xebia.xke.sangria.book.{BookRepository, BookService}
+import fr.xebia.xke.sangria.models.book.{BookRepository, BookService}
 import fr.xebia.xke.sangria.graphql.GraphQLEndpoints
 import fr.xebia.xke.sangria.rest.RestEndpoints
 

@@ -1,29 +1,28 @@
-package fr.xebia.xke.sangria.book
+package fr.xebia.xke.sangria.models.genre
 
 import akka.http.scaladsl.unmarshalling.Unmarshaller
 import io.circe.Decoder.Result
-import io.circe.Json.JString
-import io.circe.{Decoder, DecodingFailure, Encoder, HCursor, Json}
+import io.circe._
 
 sealed trait Genre
 
 object Genre {
 
   case object Comedy extends Genre
-
-  case object SyFy extends Genre
+  case object Roman extends Genre
+  case object SciFi extends Genre
+  case object Historical extends Genre
 
   private def parser(s: String): Option[Genre] = s match {
-    case "comedy" => Some(Comedy)
-    case "syfy" => Some(SyFy)
+    case "Comedy" => Some(Comedy)
+    case "Roman" => Some(Roman)
+    case "SciFi" => Some(SciFi)
+    case "Historical" => Some(Historical)
     case _ => None
   }
 
   implicit val encoder = new Encoder[Genre] {
-    override def apply(g: Genre): Json = g match {
-      case Comedy => JString("comedy")
-      case SyFy => JString("syfy")
-    }
+    override def apply(g: Genre): Json = Json.fromString(g.toString)
   }
 
   implicit val decoder = new Decoder[Genre] {
