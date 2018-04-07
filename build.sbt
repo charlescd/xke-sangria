@@ -20,6 +20,8 @@ lazy val root = (project in file(".")).
       sangriaCirce,
       akkaHttpCirce,
 
+      jwt,
+
       scalaTest % Test
     )
   )

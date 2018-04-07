@@ -12,5 +12,7 @@ object Dependencies {
   lazy val sangriaCirce = "org.sangria-graphql" %% "sangria-circe" % "1.2.0"
   lazy val akkaHttpCirce = "de.heikoseeberger" %% "akka-http-circe" % "1.19.0"
 
+  lazy val jwt = "com.pauldijou" %% "jwt-core" % "0.14.1"
+
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4"
 }

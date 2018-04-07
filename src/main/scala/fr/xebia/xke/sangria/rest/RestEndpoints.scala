@@ -6,11 +6,14 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.unmarshalling.Unmarshaller
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import fr.xebia.xke.sangria.book.{BookService, Genre}
+import fr.xebia.xke.sangria.jwt.JwtSupport.Directives._
+import fr.xebia.xke.sangria.jwt.User
 
 class RestEndpoints(bookService: BookService) {
 
-  implicit val uuidUnmarshaller: Unmarshaller[String, OffsetDateTime] = Unmarshaller.strict(OffsetDateTime.parse)
+  implicit val dateUnmarshaller: Unmarshaller[String, OffsetDateTime] = Unmarshaller.strict(OffsetDateTime.parse)
 
+  // Route simple
   val fetchRoute =
     path("books" / JavaUUID) { bookId =>
       get {
@@ -18,11 +21,34 @@ class RestEndpoints(bookService: BookService) {
       }
     }
 
+  // Route complexe à gérer en REST, faire une recherche avec des query params.
   val searchRoute =
     path("books") {
       get {
         parameters("from".as[OffsetDateTime].?, "to".as[OffsetDateTime].?, "author".?, "genre".as[Genre].?) { (from, to, author, genre) =>
           complete(bookService.search(from, to, author, genre))
+        }
+      }
+    }
+
+  // Route qui nécessite d'être authentifié (token jwt dans le header : Authorization: Bearer XXXXX)
+  val authenticatedRoute =
+    path("users") {
+      get {
+        authenticate { user =>
+          complete(???)
+        }
+      }
+    }
+
+  // Route pour s'authentifier (uniquement avec login = pg et password = 1234... c'est pour l'exemple ^^)
+  val authenticateRoute =
+    path("users" / "session") {
+      get {
+        parameters("login" ! "pg", "password" ! "1234") {
+          generateToken(User("pg")) {
+            complete("Ok")
+          }
         }
       }
     }

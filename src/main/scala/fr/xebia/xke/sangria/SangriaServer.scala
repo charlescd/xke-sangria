@@ -24,8 +24,11 @@ object SangriaServer extends App {
   Http().bindAndHandle(
     graphqlEndpoints.graphqlRoute
       ~ graphqlEndpoints.graphiqlRoute
+
       ~ restEndpoints.fetchRoute
-      ~ restEndpoints.searchRoute,
+      ~ restEndpoints.searchRoute
+      ~ restEndpoints.authenticatedRoute
+      ~ restEndpoints.authenticateRoute,
     "0.0.0.0",
     8080
   )
