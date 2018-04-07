@@ -3,6 +3,7 @@ package fr.xebia.xke.sangria.models.genre
 import akka.http.scaladsl.unmarshalling.Unmarshaller
 import io.circe.Decoder.Result
 import io.circe._
+import sangria.macros.derive.deriveEnumType
 
 sealed trait Genre
 
@@ -20,6 +21,8 @@ object Genre {
     case "Historical" => Some(Historical)
     case _ => None
   }
+
+  implicit val GenreType = deriveEnumType[Genre]()
 
   implicit val encoder = new Encoder[Genre] {
     override def apply(g: Genre): Json = Json.fromString(g.toString)

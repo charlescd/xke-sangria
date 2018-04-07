@@ -16,26 +16,26 @@ Ràf :
   - Pour enrichir l'url, on peut ajouter un queryParam qui permet de dire : tous les livres dont "l'auteur est" ou "le genre est" ou "la date est inférieure à"
 - Préparer les étapes du dessus
   - Step 1 -> PG
-  - Step 2 -> PG ? Charles ?
+  - Step 2 -> Charles
   - Step 3 -> Charles
   - Step 4 -> PG
 
 
 Book {
-isbn
-titre
-synopsis
-date
-auteur
-genre
+  isbn
+  titre
+  synopsis
+  date
+  auteur
+  genre
 }
 
 Genre -> sealed family (sealed trait / case object)
 
 Auteur {
-id
-nom
-prénom
+  id
+  nom
+  prénom
 }
 
 

@@ -1,8 +1,8 @@
 package fr.xebia.xke.sangria.graphql
 
+import fr.xebia.xke.sangria.graphql.Scalar.UuidType
 import fr.xebia.xke.sangria.models.book.Book.BookType
 import fr.xebia.xke.sangria.models.book.BookRepository
-import UUIDScalar.UuidType
 import sangria.schema._
 
 object Query {
@@ -20,6 +20,6 @@ object Query {
       resolve = _.ctx.books)
   ))
 
-  val schema = Schema(QueryType)
+  val schema = Schema(query = QueryType)
 
 }
