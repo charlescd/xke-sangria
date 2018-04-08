@@ -2,11 +2,10 @@ package fr.xebia.xke.sangria.models.author
 
 import java.util.UUID
 
+import fr.xebia.xke.sangria.models.author.AuthorRepository._
 
-object AuthorRepository {
 
-  val Author1 = Author(UUID.randomUUID(), "Dumas", "Alexandre")
-  val Author2 = Author(UUID.randomUUID(), "Hugo", "Victor")
+class AuthorRepository {
 
   private val repo = Seq(Author1, Author2)
 
@@ -14,4 +13,9 @@ object AuthorRepository {
     author.lastName == lastName)
 
   def authors = repo
+}
+
+object AuthorRepository {
+  val Author1 = Author(UUID.randomUUID(), "Dumas", "Alexandre")
+  val Author2 = Author(UUID.randomUUID(), "Hugo", "Victor")
 }

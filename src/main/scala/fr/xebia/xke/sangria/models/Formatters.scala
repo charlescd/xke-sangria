@@ -6,7 +6,7 @@ import java.util.UUID
 import io.circe.Decoder.Result
 import io.circe.{Decoder, Encoder, HCursor, Json}
 
-object Implicits {
+object Formatters {
   implicit val uuidEncoder = new Encoder[UUID] {
     override def apply(uuid: UUID): Json = Json.fromString(uuid.toString)
   }

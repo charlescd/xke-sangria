@@ -6,7 +6,7 @@ import akka.http.scaladsl.unmarshalling.Unmarshaller
 import fr.xebia.xke.sangria.models.genre.Genre
 import io.circe.generic.semiauto._
 import io.circe.parser.parse
-import fr.xebia.xke.sangria.models.Implicits._
+import fr.xebia.xke.sangria.models.Formatters._
 import fr.xebia.xke.sangria.graphql.Scalar._
 import sangria.macros.derive.deriveInputObjectType
 

@@ -89,6 +89,19 @@ object JwtSupport extends JwtSupport {
       }
     }
 
+    def authenticateForGraphQL: Directive1[Option[User]] = {
+
+      extract(ctx => getToken(ctx.request)).flatMap {
+        case Some(token) =>
+          decode[User](token) match {
+            case Some(user) => provide(Some(user))
+            case None => reject(AuthenticationFailedRejection(CredentialsRejected, HttpChallenge("Bearer", "Xebia FR")))
+          }
+
+        case None => provide(None)
+      }
+    }
+
     def generateToken(user: User): Directive0 =
       respondWithHeaders(JwtTokenHeader(encode(user)))
   }

@@ -5,7 +5,7 @@ import java.util.UUID
 
 import fr.xebia.xke.sangria.models.author.Author
 import fr.xebia.xke.sangria.models.genre.Genre
-import fr.xebia.xke.sangria.models.Implicits._
+import fr.xebia.xke.sangria.models.Formatters._
 import fr.xebia.xke.sangria.graphql.Scalar._
 import io.circe.generic.semiauto._
 import sangria.macros.derive._
