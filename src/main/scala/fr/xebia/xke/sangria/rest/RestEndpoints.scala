@@ -2,21 +2,17 @@ package fr.xebia.xke.sangria.rest
 
 import java.time.OffsetDateTime
 
-import akka.http.scaladsl.marshalling.Marshaller
-import akka.http.scaladsl.model.HttpResponse
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.unmarshalling.Unmarshaller
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
-import fr.xebia.xke.sangria.models.genre.Genre
-import fr.xebia.xke.sangria.models.book.{Book, BookService}
 import fr.xebia.xke.sangria.jwt.JwtSupport.Directives._
 import fr.xebia.xke.sangria.jwt.User
+import fr.xebia.xke.sangria.models.book.BookService
+import fr.xebia.xke.sangria.models.filter.Filter
 
 class RestEndpoints(bookService: BookService) {
 
   implicit val dateUnmarshaller: Unmarshaller[String, OffsetDateTime] = Unmarshaller.strict(OffsetDateTime.parse)
-  implicit val bookMarshaller: Marshaller[Book, HttpResponse] = ???
-  implicit val booksMarshaller: Marshaller[Seq[Book], HttpResponse] = ???
 
   // Route simple
   val fetchRoute =
@@ -26,19 +22,19 @@ class RestEndpoints(bookService: BookService) {
       }
     }
 
-  // Route complexe à gérer en REST, faire une recherche avec des query params.
+  // Route complexe à gérer, faire une recherche avec des query params.
   val searchRoute =
     path("books") {
       get {
-        parameters("from".as[OffsetDateTime].?, "to".as[OffsetDateTime].?, "author".?, "genre".as[Genre].?) { (from, to, author, genre) =>
-          complete(bookService.search(from, to, author, genre))
+        parameters("filter".as[Filter].?) { filter =>
+          complete(bookService.search(filter))
         }
       }
     }
 
-  // Route qui nécessite d'être authentifié (token jwt dans le header : Authorization: Bearer XXXXX)
+  // Route qui nécessite d'être authentifié, par exemple en tant qu'auteur (token jwt dans le header : Authorization: Bearer XXXXX)
   val authenticatedRoute =
-    path("users") {
+    path("me" / "books") {
       get {
         authenticate { user =>
           complete(???)

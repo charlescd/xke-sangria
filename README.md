@@ -42,3 +42,11 @@ Auteur {
 # Explications des difficultés rencontrées
 
 - UUID n'est pas dans Sangria,   
+- Offsetdatetime non plus ?
+- Beaucoup de typeclasses, c'est cool, ça élime le boilerplate mais les erreurs sont obscures...
+
+
+# Notes Charles
+Avant, j'avais l'impression que GraphQL c'était un outil sympa pour le front mais qui déportait la complexité coté back.
+Ce que j'aimerais montrer avec ce talk, ce que ce n'est pas forcement vrai. 
+On peut migrer vers du graphql sans trop sans ajouter de complexité si on a les bons outils (par exemple... sangria)

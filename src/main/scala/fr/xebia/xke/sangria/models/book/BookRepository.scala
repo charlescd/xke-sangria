@@ -18,7 +18,7 @@ class BookRepository {
 
 object BookRepository {
   val Book1 = Book(UUID.randomUUID(), "Les 3 mousquetaires", "c'est l'histoire de Dartagnan",
-    OffsetDateTime.now(), Author1, Historical)
+    OffsetDateTime.parse("1994-01-01T01:00:00Z"), Author1, Historical)
 
   val Book2 = Book(UUID.randomUUID(), "20000 lieues sous les mers", "c'est l'histoire de blabla",
     OffsetDateTime.now(), Author2, Roman)

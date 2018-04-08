@@ -3,7 +3,7 @@ package fr.xebia.xke.sangria.graphql
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives.{as, complete, entity, get, getFromResource, path, post}
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
-import fr.xebia.xke.sangria.models.book.BookRepository
+import fr.xebia.xke.sangria.models.book.BookService
 import io.circe.optics.JsonPath.root
 import io.circe.{Json, JsonObject}
 import sangria.execution.{ErrorWithResolver, Executor, QueryAnalysisError}
@@ -13,7 +13,7 @@ import sangria.parser.QueryParser
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
-class GraphQLEndpoints(bookRepository: BookRepository)(implicit ec: ExecutionContext) {
+class GraphQLEndpoints(bookService: BookService)(implicit ec: ExecutionContext) {
 
   val graphqlRoute =
     path("graphql") {
@@ -38,7 +38,7 @@ class GraphQLEndpoints(bookRepository: BookRepository)(implicit ec: ExecutionCon
 
         QueryParser.parse(query) match {
           case Success(queryAst) =>
-            val res = Executor.execute(Query.schema, queryAst, bookRepository, variables = vars, operationName = operation)
+            val res = Executor.execute(Query.schema, queryAst, bookService, variables = vars, operationName = operation)
               .map(StatusCodes.OK -> _)
               .recover {
                 case error: QueryAnalysisError => StatusCodes.BadRequest -> error.resolveError

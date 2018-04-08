@@ -18,7 +18,7 @@ object SangriaServer extends App {
   val bookRepository = new BookRepository()
   val bookService = new BookService(bookRepository)
 
-  val graphqlEndpoints = new GraphQLEndpoints(bookRepository)
+  val graphqlEndpoints = new GraphQLEndpoints(bookService)
   val restEndpoints = new RestEndpoints(bookService)
 
   Http().bindAndHandle(
