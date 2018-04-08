@@ -76,6 +76,10 @@ object JwtSupport extends JwtSupport {
     import BasicDirectives._
     import RouteDirectives._
 
+    def generateToken(user: User): Directive0 =
+      respondWithHeaders(JwtTokenHeader(encode(user)))
+
+    // REST
     def authenticate: Directive1[User] = {
 
       extract(ctx => getToken(ctx.request)).flatMap {
@@ -89,6 +93,7 @@ object JwtSupport extends JwtSupport {
       }
     }
 
+    // GraphQL
     def authenticateForGraphQL: Directive1[Option[User]] = {
 
       extract(ctx => getToken(ctx.request)).flatMap {
@@ -101,9 +106,6 @@ object JwtSupport extends JwtSupport {
         case None => provide(None)
       }
     }
-
-    def generateToken(user: User): Directive0 =
-      respondWithHeaders(JwtTokenHeader(encode(user)))
   }
 
 }

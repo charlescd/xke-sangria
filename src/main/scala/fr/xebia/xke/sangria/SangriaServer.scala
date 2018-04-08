@@ -26,8 +26,8 @@ object SangriaServer extends App {
   val restEndpoints = new RestEndpoints(bookService, authorRepository, userRepository)
 
   Http().bindAndHandle(
-    graphqlEndpoints.graphqlRoute
-      ~ graphqlEndpoints.graphiqlRoute
+    graphqlEndpoints.graphiqlRoute
+      ~ graphqlEndpoints.graphqlRoute
 
       ~ restEndpoints.fetchRoute
       ~ restEndpoints.searchRoute
