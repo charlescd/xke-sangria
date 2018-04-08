@@ -14,9 +14,6 @@ case class Filter(from: Option[OffsetDateTime], to: Option[OffsetDateTime], auth
 
 object Filter {
 
-  //GraphQL
-  implicit val FilterType = deriveInputObjectType[Filter]()
-
   // REST
   implicit val decoder = deriveDecoder[Filter]
   implicit val encoder = deriveEncoder[Filter]

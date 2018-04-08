@@ -9,10 +9,6 @@ import fr.xebia.xke.sangria.graphql.Scalar._
 case class Author(id: UUID, lastName: String, firstName: String)
 
 object Author {
-  //GraphQL
-  implicit val AuthorType = deriveObjectType[Unit, Author]()
-  implicit val AuthorInputType = deriveInputObjectType[Author]()
-
   // REST
   implicit val decoder = deriveDecoder[Author]
   implicit val encoder = deriveEncoder[Author]

@@ -22,9 +22,6 @@ object Genre {
     case _ => None
   }
 
-  //GraphQL
-  implicit val GenreType = deriveEnumType[Genre]()
-
   implicit val encoder = new Encoder[Genre] {
     override def apply(g: Genre): Json = Json.fromString(g.toString)
   }

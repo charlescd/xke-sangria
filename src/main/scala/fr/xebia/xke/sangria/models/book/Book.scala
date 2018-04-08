@@ -27,19 +27,12 @@ case class BookInput(title: String,
 
 object Book {
 
-  //GraphQL
-  implicit val BookType: ObjectType[Unit, Book] = deriveObjectType[Unit, Book]()
-
   // REST
   implicit val decoder = deriveDecoder[Book]
   implicit val encoder = deriveEncoder[Book]
 }
 
 object BookInput {
-
-  //GraphQL
-  implicit val BookInputType:InputObjectType[BookInput] =
-    deriveInputObjectType[BookInput]()
 
   implicit val decoder = deriveDecoder[BookInput]
   implicit val encoder = deriveEncoder[BookInput]
