@@ -7,13 +7,20 @@ import fr.xebia.xke.sangria.models.author.AuthorRepository.{Author1, Author2}
 import fr.xebia.xke.sangria.models.book.BookRepository._
 import fr.xebia.xke.sangria.models.genre.Genre.{Historical, Roman}
 
+import scala.collection.mutable
+
 class BookRepository {
 
-  private val repo = Seq(Book1, Book2)
+  private val repo: mutable.MutableList[Book] = mutable.MutableList(Book1, Book2)
 
   def book(isbn: UUID) = repo.find(_.isbn == isbn)
 
   def books = repo
+
+  def createBook(book: Book): Book = {
+    repo += book
+    book
+  }
 }
 
 object BookRepository {

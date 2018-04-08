@@ -12,10 +12,12 @@ class AuthorRepository {
   def author(firstName: String, lastName: String) = repo.find(author => author.firstName == firstName &&
     author.lastName == lastName)
 
+  def author(id: UUID): Option[Author] = repo.find(_.id == id)
+
   def authors = repo
 }
 
 object AuthorRepository {
   val Author1 = Author(UUID.randomUUID(), "Dumas", "Alexandre")
-  val Author2 = Author(UUID.randomUUID(), "Hugo", "Victor")
+  val Author2 = Author(UUID.randomUUID(), "Verne", "Jules")
 }

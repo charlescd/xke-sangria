@@ -20,7 +20,7 @@ object SangriaServer extends App {
   val bookRepository = new BookRepository()
   val authorRepository = new AuthorRepository()
   val userRepository = new UserRepository()
-  val bookService = new BookService(bookRepository)
+  val bookService = new BookService(bookRepository, authorRepository)
 
   val graphqlEndpoints = new GraphQLEndpoints(bookService, authorRepository, userRepository)
   val restEndpoints = new RestEndpoints(bookService, authorRepository, userRepository)

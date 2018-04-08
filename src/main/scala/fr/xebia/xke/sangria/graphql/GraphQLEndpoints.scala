@@ -46,7 +46,8 @@ class GraphQLEndpoints(bookService: BookService, authorRepository: AuthorReposit
 
         QueryParser.parse(query) match {
           case Success(queryAst) =>
-            val res = Executor.execute(Query.schema, queryAst, context, variables = vars, operationName = operation, exceptionHandler = SecureContext.errorHandler)
+            val res = Executor.execute(SchemaDefinition.schema, queryAst, context, variables = vars, operationName = operation,
+              exceptionHandler = SecureContext.errorHandler)
               .map(StatusCodes.OK -> _)
               .recover {
                 case error: QueryAnalysisError => StatusCodes.BadRequest -> error.resolveError

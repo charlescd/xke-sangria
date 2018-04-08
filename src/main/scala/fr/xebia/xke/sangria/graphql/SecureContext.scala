@@ -1,5 +1,7 @@
 package fr.xebia.xke.sangria.graphql
 
+import java.util.UUID
+
 import fr.xebia.xke.sangria.models.author.AuthorRepository
 import fr.xebia.xke.sangria.models.book.BookService
 import fr.xebia.xke.sangria.models.user.{Access, User, UserRepository}
@@ -19,9 +21,11 @@ class SecureContext(val bookService: BookService,
 object SecureContext {
 
   case class Forbidden(m: String) extends Exception(m)
+  case class MissingAuthor(uuid: UUID) extends Exception()
 
   val errorHandler = ExceptionHandler {
     case (m, Forbidden(message)) ⇒ HandledException(message)
+    case (m, MissingAuthor(uuid)) ⇒ HandledException(s"Missing author with uuid: $uuid")
   }
 
 }

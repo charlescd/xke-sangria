@@ -38,7 +38,7 @@ object Scalar {
 
   implicit val OffsetDateTimeType: ScalarType[OffsetDateTime] = ScalarType[OffsetDateTime]("OffsetDateTime",
     coerceOutput = (date, caps) =>
-      if (caps.contains(DateSupport)) date.toLocalDate
+      if (caps.contains(DateSupport)) date
       else date.toString,
     coerceUserInput = {
       case s: String => parseDate(s)
