@@ -22,6 +22,7 @@ object Genre {
     case _ => None
   }
 
+  //GraphQL
   implicit val GenreType = deriveEnumType[Genre]()
 
   implicit val encoder = new Encoder[Genre] {
