@@ -8,7 +8,8 @@ import akka.http.scaladsl.model.headers.{HttpChallenge, ModeledCustomHeader, Mod
 import akka.http.scaladsl.server.AuthenticationFailedRejection.{CredentialsMissing, CredentialsRejected}
 import akka.http.scaladsl.server.directives.RespondWithDirectives.respondWithHeaders
 import akka.http.scaladsl.server.directives.{BasicDirectives, RouteDirectives}
-import akka.http.scaladsl.server.{AuthenticationFailedRejection, AuthorizationFailedRejection, Directive0, Directive1}
+import akka.http.scaladsl.server.{AuthenticationFailedRejection, Directive0, Directive1}
+import fr.xebia.xke.sangria.models.user.User
 import io.circe.parser.parse
 import io.circe.syntax._
 import io.circe.{Decoder, Encoder}
@@ -81,7 +82,6 @@ object JwtSupport extends JwtSupport {
         case Some(token) =>
           decode[User](token) match {
             case Some(user) => provide(user)
-            case Some(_) => reject(AuthorizationFailedRejection)
             case None => reject(AuthenticationFailedRejection(CredentialsRejected, HttpChallenge("Bearer", "Xebia FR")))
           }
 

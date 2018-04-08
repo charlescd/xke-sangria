@@ -47,6 +47,6 @@ Auteur {
 
 
 # Notes Charles
-Avant, j'avais l'impression que GraphQL c'était un outil sympa pour le front mais qui déportait la complexité coté back.
+Avant, j'avais l'impression que GraphQL c'était un outil sympa pour le front mais qui déportait la complexité coté back (donc j'aimais pas).
 Ce que j'aimerais montrer avec ce talk, ce que ce n'est pas forcement vrai. 
-On peut migrer vers du graphql sans trop sans ajouter de complexité si on a les bons outils (par exemple... sangria)
+On peut migrer vers du graphql sans ajouter de complexité et avec peu de boilerplate si on a les bons outils (par exemple... sangria)

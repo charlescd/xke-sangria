@@ -2,13 +2,15 @@ package fr.xebia.xke.sangria.rest
 
 import java.time.OffsetDateTime
 
+import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.unmarshalling.Unmarshaller
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import fr.xebia.xke.sangria.jwt.JwtSupport.Directives._
-import fr.xebia.xke.sangria.jwt.User
+import fr.xebia.xke.sangria.models.author.AuthorRepository
 import fr.xebia.xke.sangria.models.book.BookService
 import fr.xebia.xke.sangria.models.filter.Filter
+import fr.xebia.xke.sangria.models.user.{Access, UserRepository}
 
 class RestEndpoints(bookService: BookService) {
 
@@ -34,10 +36,13 @@ class RestEndpoints(bookService: BookService) {
 
   // Route qui nécessite d'être authentifié, par exemple en tant qu'auteur (token jwt dans le header : Authorization: Bearer XXXXX)
   val authenticatedRoute =
-    path("me" / "books") {
+    path("me" / "authors") {
       get {
         authenticate { user =>
-          complete(???)
+          user.access match {
+            case Access.Author => complete(AuthorRepository.authors)
+            case Access.No => complete(StatusCodes.Forbidden)
+          }
         }
       }
     }
@@ -46,9 +51,12 @@ class RestEndpoints(bookService: BookService) {
   val authenticateRoute =
     path("users" / "session") {
       get {
-        parameters("login" ! "pg", "password" ! "1234") {
-          generateToken(User("pg")) {
-            complete("Ok")
+        parameters("login", "password") { (login, password) =>
+          UserRepository.authenticate(login, password) match {
+            case Some(user) => generateToken(user) {
+              complete("Ok")
+            }
+            case _ => complete(StatusCodes.Unauthorized)
           }
         }
       }
