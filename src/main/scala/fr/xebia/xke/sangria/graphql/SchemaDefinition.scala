@@ -3,11 +3,9 @@ package fr.xebia.xke.sangria.graphql
 import fr.xebia.xke.sangria.graphql.Scalar.UuidType
 import fr.xebia.xke.sangria.models.author.Author.AuthorType
 import fr.xebia.xke.sangria.models.book.Book.BookType
-import fr.xebia.xke.sangria.models.book.BookInput
 import fr.xebia.xke.sangria.models.book.BookInput.BookInputType
 import fr.xebia.xke.sangria.models.filter.Filter.FilterType
 import fr.xebia.xke.sangria.models.user.Access
-//import sangria.marshalling.FromInput
 import sangria.marshalling.circe._
 import sangria.schema._
 
