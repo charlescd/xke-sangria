@@ -4,7 +4,6 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-import fr.xebia.xke.sangria.graphql.GraphQLEndpoints
 import fr.xebia.xke.sangria.models.author.AuthorRepository
 import fr.xebia.xke.sangria.models.book.{BookRepository, BookService}
 import fr.xebia.xke.sangria.models.user.UserRepository
@@ -22,14 +21,10 @@ object SangriaServer extends App {
   val userRepository = new UserRepository()
   val bookService = new BookService(bookRepository, authorRepository)
 
-  val graphqlEndpoints = new GraphQLEndpoints(bookService, authorRepository, userRepository)
   val restEndpoints = new RestEndpoints(bookService, authorRepository, userRepository)
 
   Http().bindAndHandle(
-    graphqlEndpoints.graphiqlRoute
-      ~ graphqlEndpoints.graphqlRoute
-
-      ~ restEndpoints.fetchRoute
+      restEndpoints.fetchRoute
       ~ restEndpoints.searchRoute
       ~ restEndpoints.authenticatedRoute
       ~ restEndpoints.authenticateRoute,

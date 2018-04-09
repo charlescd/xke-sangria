@@ -7,16 +7,10 @@ import fr.xebia.xke.sangria.models.genre.Genre
 import io.circe.generic.semiauto._
 import io.circe.parser.parse
 import fr.xebia.xke.sangria.models.Formatters._
-import fr.xebia.xke.sangria.graphql.Scalar._
-import sangria.macros.derive.deriveInputObjectType
 
 case class Filter(from: Option[OffsetDateTime], to: Option[OffsetDateTime], author: Option[String], genre: Option[Genre])
 
 object Filter {
-
-  //GraphQL
-  implicit val FilterType = deriveInputObjectType[Filter]()
-
   // REST
   implicit val decoder = deriveDecoder[Filter]
   implicit val encoder = deriveEncoder[Filter]
